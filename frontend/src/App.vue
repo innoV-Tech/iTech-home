@@ -1,32 +1,57 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app id='app'>
+    <v-main>
+      <NavBar />
+      <router-view class="animated fadeIn"></router-view>
+    </v-main>
+  </v-app>
 </template>
 
-<style lang="scss">
+<script>
+import NavBar from "./components/layouts/NavBar";
+export default {
+  name: "App",
+  components: {
+    NavBar,
+  },
+  data: () => ({
+    //
+  }),
+  created(){},
+  methods: {
+    // createSession() {
+    //   if (!this.$session.has("auth")) {
+    //     this.$session.start();
+    //     this.$session.set("auth", false);
+    //   }
+    //   this.$store.state.AUTHENTICATED = this.$session.get("auth");
+    //   console.log(this.$store.state.AUTHENTICATED);
+    // },
+  }
+};
+</script>
+
+<style scoped>
+html,
+body {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
