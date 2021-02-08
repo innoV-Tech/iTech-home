@@ -32,8 +32,11 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css?family=Amita");
+@import url("https://fonts.googleapis.com/css?family=Arbutus+Slab");
 html,
 body {
+  font-family: "Arbutus Slab", Helvetica, Arial, sans-serif;
   scroll-behavior: smooth;
   overflow-x: hidden;
   width: 100%;
@@ -41,7 +44,7 @@ body {
   padding: 0px;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Arbutus Slab", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

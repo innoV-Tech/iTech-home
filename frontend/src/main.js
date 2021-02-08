@@ -14,6 +14,10 @@ import vuetify from "./plugins/vuetify";
 // vue session
 // import VueSession from "vue-session";
 
+//Aos imports
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 Vue.config.productionTip = false;
 Vue.use(VAnimateCss);
 Vue.use(Vuex);
@@ -28,6 +32,9 @@ Vue.prototype.$axios = Axios;
 Vue.config.productionTip = false;
 
 new Vue({
+  created() {
+    AOS.init();
+  },
   router,
   store,
   vuetify,
