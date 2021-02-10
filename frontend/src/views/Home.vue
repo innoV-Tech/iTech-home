@@ -31,7 +31,7 @@
      <div class='services-container mt-5'>
        <div class='services-img'></div>
         <div class='services-items'>
-          <h2 class='service-title ml-5 mb-5 font-weight-bold'>We provides <span style='color:#eca715'>intelligent</span> systems for <span style='color:#eca715'>intelligent</span> results</h2>
+          <h2 class='service-title ml-5 mb-5 font-weight-bold'>We develop <span style='color:#eca715'>intelligent</span> systems for <span style='color:#eca715'>intelligent</span> results</h2>
           <div class='services-flex-container'>
             <v-flex 
               xs12 sm12 md4 lg4 xl4 
@@ -62,7 +62,7 @@
           data-aos-duration="700"
          >
           <h3 class='mb-5' style=''><span>{{itech.title}}</span></h3>
-          <p>{{itech.content}}</p>
+          <p v-html='itech.content'></p>
         </div>
         <div 
           class='itechs-icon pa-5'
@@ -78,8 +78,8 @@
         <h1 class='mb-4'>Get in Touch</h1>
         <div class='infos mb-4'>
           <p><v-icon color='white'>fas fa-envelope</v-icon> inno8tech@gmail.com</p>
-          <p><v-icon color='white'>fas fa-phone-alt</v-icon> 0612364758</p>
-          <p><v-icon color='white'>fas fa-map-marker</v-icon> cameroon</p>
+          <p><v-icon color='white'>fas fa-phone-alt</v-icon> +31 6 18874427 & +237 681 33 52 61</p>
+          <p><v-icon color='white'>fas fa-map-marker</v-icon> Jouvence Yaounde cameroon</p>
         </div>
         <div class='social-media'></div>
       </div>
@@ -94,7 +94,6 @@
         <p class='form-err-msg'></p>
         <v-text-field
             v-model="email"
-            :rules="[$store.state.emailRules, $store.state.rules.required]"
             label="Email"
             type='email'
             required
@@ -107,6 +106,13 @@
             required
             outlined
         ></v-text-field>
+         <v-text-field
+            v-model="telNumber"
+            label="Tel. Number"
+            type='number'
+            required
+            outlined
+        ></v-text-field>
         <v-textarea
           v-model="message"
           :rules="[$store.state.rules.required]"
@@ -115,7 +121,7 @@
           outlined
         ></v-textarea>
         <div class='btn-container'>
-          <v-btn large class='pa-3' color='#111111'>Send Message</v-btn>
+          <v-btn large class='pa-3' color='#111111' @click='sendMail()'>Send Message</v-btn>
         </div>
       </v-form>
     </div>
@@ -154,21 +160,52 @@ export default {
           content: "As margins shrinks, the market becomes harder and the way forward is going digital to expand the market. It is all about drawing consumers to your business and maintaining their loyalty. But how do you constantly understand customer preferences and changing behavior? Is your marketing team meeting up? Are they bringing a return on marketing investment?!Tech is occupying this space with experience in industries ranging from satellite telecom, mobile networks operators(MNO’s) media agencies, mobile banking, and finance, insurance, etc.! Tech is leveraging Artificial intelligence, Analytics, Big Data, in marketing to understand customer preferences to prevent customer churn. This knowledge helps you answer questions in marketing ranging from customer patterns, behaviors, and where the market is shifting too. With this knowledge, organizations can plan and execute intelligent marketing that delivers value to customers and bring returns to the company.", 
           icon: require('../assets/home/analytics.jpg'), animation:'fade-left'},
         {title: 'MARKETING AUTOMATION B2B', 
-          content: 'To attract, nurture and qualify leads, every organization needs a good marketing team with expert knowledge in marketing automation. It is said that the efficient use of marketing automation drives a 14.5% increase in sales productivity and a 12.2% reduction in marketing overhead. Is your marketing team seeing these results? !Tech has positioned itself in helping organizations to prepare their marketing automation process.!Tech also leverages its expert knowledge in 360° degree marketing in promoting the companies across all media. !Tech carefully tailored messaging which leads to customer satisfaction that brings about brand loyalty. We make use of data to help companies understand what their marketing messages need to be. We analyzed social media conversations, web trends, inbound traffic, etc to uncover revenue opportunities. We answer questions such as ;What do people say about your brand? What other things are they interested in? What are they doing when they get to your site? Contact US', 
+          content: `To attract, nurture and qualify leads, every organization needs a good marketing team with expert knowledge in marketing automation. It is said that the efficient use of marketing automation drives a 14.5% increase in sales productivity and a 12.2% reduction in marketing overhead. Is your marketing team seeing these results? !Tech has positioned itself in helping organizations to prepare their marketing automation process.!Tech also leverages its expert knowledge in 360° degree marketing in promoting the companies across all media. !Tech carefully tailored messaging which leads to customer satisfaction that brings about brand loyalty. We make use of data to help companies understand what their marketing messages need to be. We analyze social media conversations, web trends, inbound traffic, etc to uncover revenue opportunities. We answer questions such as ;What do people say about your brand? What other things are they interested in? What are they doing when they get to your site? <a style='text-decoration: None' href='#contact-id'>Contact Us</a>`, 
           icon: require('../assets/home/automation.jpg'), animation:'fade-right'},
-          {title: 'DIGITAL MARKETING.(SUB PAGE WITHING MARKETING )OR you know how to put it)', 
-          content: 'Marketing as a field has undergone a revolution. With the advancement in technology, traditional marketing is transitioning to the online space. Marketing in the digital space needs specialized skills set.!TECH prides itself with the knowledge of digital marketing across search engines, emails, social media, text etc. If your marketing can not show a return on investment then get in touch with us today.', 
+        {title: 'DIGITAL MARKETING', 
+          content: `Marketing as a field has undergone a revolution. With the advancement in technology, traditional marketing is transitioning to the online space. Marketing in the digital space needs specialized skills set. !TECH prides itself with the knowledge of digital marketing across search engines, emails, social media, text etc. If your marketing can not show a return on investment then get in touch with us today. <a style='text-decoration: None' href='#contact-id'>Contact Us</a>`, 
           icon: require('../assets/home/digitalmarketing.jpg'), animation:'fade-left'},
       ],
       neme: null,
       email: null,
-      message: null
+      message: null,
+      telNumber: null,
     }
   },
 
   created(){},
 
-  methods: {},
+  methods: {
+    sendMail(){
+      let self = this;
+      let formErrMsg = document.querySelector('.form-err-msg')
+      let validationErrMsg = document.querySelector('.v-messages__message');
+
+      if(!document.body.contains(validationErrMsg) && self.name != null && self.message != null){
+        // this.$store.dispatch("publicPostReq", {
+        //   url: "signin",
+        //   params: {
+        //       email: self.email,
+        //       password: self.password
+        //   },
+        //   auth: null,
+        //   csrftoken: null,
+        //   callback: function(data) {
+        //       console.log(data);
+        //       if(data.authenticate){
+        //         self.startSession(data.token, data.id)
+        //         self.$router.push({name: "Dashboard"})
+        //       }else{
+        //          formErrMsg.innerHTML = data.msg
+        //       }
+        //   },
+        // });
+        formErrMsg.innerHTML = 'Your message has been sent, Tank you!'
+      }else{
+        formErrMsg.innerHTML = 'Name and message should not be empty';
+      }
+    }
+  },
 };
 </script>
 
@@ -433,7 +470,7 @@ export default {
   }
   .contact-form{
     height: auto;
-    width: 30%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     justify-content: center;
