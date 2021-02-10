@@ -2,67 +2,94 @@
     <div class='nav-core' :style="{backgroundColor: navBarBackGroundColor}">
        <v-layout class='nav-layout hidden-sm-and-down'>
             <v-flex xs12 sm12 md2 lg2 xl2 class='logo-flex'>
-                <div class='logo'><h1 style='color:#eca715'>!Tech</h1></div>
+                 <router-link to="/" style="text-decoration: none;">
+                     <div class='logo' @click="isServices=false, isContact=false,scrollTo('#landing-id')"><h1 style='color:#eca715'>!Tech</h1></div>
+                </router-link>
             </v-flex>
 
             <v-flex xs12 sm12 md8 lg8 xl8 class='menu-items-container'>
                 <router-link to="/about" style="text-decoration: none;">
                     <div class="menu-item">
                         <span>About</span>
+                        <span class='indicator animated fadeInUp' v-if='$route.name == "About"'></span>
                         <!-- <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon> -->
                     </div>
                 </router-link>
-                <router-link to="/services" style="text-decoration: none;">
+                <div @click="$router.push('/'), isContact=false, isServices=true, scrollTo('#services-id')" style="text-decoration: none;cursor:pointer;">
                     <div class="menu-item">
                         <span>Services</span>
+                        <span class='indicator animated fadeInUp' v-if='$route.name=="Home" && isServices==true'></span>
                         <!-- <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon> -->
                     </div>
-                </router-link>
-                <router-link to="/career" style="text-decoration: none;">
+                </div>
+                <!-- <router-link to="/career" style="text-decoration: none;">
                     <div class="menu-item">
                         <span>Career</span>
-                        <!-- <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon> -->
                     </div>
                 </router-link>
                 <router-link to="/testimonials" style="text-decoration: none;">
                     <div class="menu-item">
                         <span>Testimonials</span>
-                        <!-- <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon> -->
                     </div>
                 </router-link>
                 <router-link to="/partners" style="text-decoration: none;">
                     <div class="menu-item">
                         <span>Partners</span>
-                        <!-- <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon> -->
                     </div>
-                </router-link>
-                <router-link to="/contact" style="text-decoration: none;">
+                </router-link> -->
+                <div @click="$router.push('/'), isServices=false, isContact=true, scrollTo('#contact-id')" style="text-decoration: none;cursor:pointer;">
                     <div class="menu-item">
                         <span>Contact</span>
+                        <span class='indicator animated fadeInUp' v-if='$route.name=="Home" && isContact==true'></span>
                         <!-- <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon> -->
                     </div>
-                </router-link>
+                </div>
             </v-flex>
 
-            <v-flex xs12 sm12 md2 lg2 xl2 class='actions-item'>
-                <v-btn medium rounded color='#eca715' class='pt-3 pb-3'>Request project</v-btn>
-            </v-flex>
+            <!-- <v-flex xs12 sm12 md2 lg2 xl2 class='actions-item'>
+                <v-btn medium rounded color='#c10fa3' class='pt-3 pb-3'>Request project</v-btn>
+            </v-flex> -->
        </v-layout>
     </div>
 </template>
 
 <script>
+import * as easings from "vuetify/es5/services/goto/easing-patterns";
 export default {
     name: 'NavBar',
 
     data(){
         return{
             navBarBackGroundColor: '#2d2d41',
-            scrollColor: '#ffffff'
+            scrollColor: '#ffffff',
+            easing: "easeInOutCubic",
+            easings: Object.keys(easings),
+            duration: 400,
+            offset: 25,
+            // # pages indicators
+            isServices: false,
+            isContact: false,
         }
     },
-
-    created(){},
+    
+    computed: {
+        target() {
+            const value = this[this.type];
+            if (!isNaN(value)) return Number(value);
+            else return value;
+        },
+        options() {
+            return {
+                duration: this.duration,
+                offset: this.offset,
+                easing: this.easing
+            };
+        }
+    },
+    created(){
+        this.diseableIndicator()
+         window.addEventListener('scroll', this.diseableIndicator)
+    },
 
     methods: {
         menuScrollAnimation() {
@@ -78,6 +105,32 @@ export default {
                 scrollNavLayout.style.opacity = "0";
             }
         },
+
+        diseableIndicator(){
+            // hide indicator when scrool top offset=0
+            let self = this
+            // window.addEventListener('scroll', function(){
+                let scrollValue = document.documentElement.scrollTop;
+                // console.log(scrollValue);
+                if (scrollValue == 0){
+                    self.isServices = false;
+                    self.isContact = false;
+                }else if(scrollValue < 4000 && scrollValue > 600){
+                    self.isServices = true;
+                    self.isContact = false;
+                }else if(scrollValue > 5000){
+                    self.isServices = false;
+                    self.isContact = true;
+                }
+            // })
+        },
+
+        scrollTo(ancre) {
+            let self = this;
+            setTimeout(() => {
+                this.$vuetify.goTo(ancre, self.options);
+            }, 20);
+        }
     }
 }
 </script>
@@ -130,9 +183,9 @@ export default {
 }
 .menu-items-container .menu-item{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: auto;
   height: auto;
   margin-left: 30px;
@@ -157,6 +210,10 @@ export default {
     font-size: 15px;
     color: #2d2d41;
     font-weight: bold;
+}
+.indicator{
+    border: 2px solid #eca715;
+    width: 30px;
 }
 @media only screen and (max-width: 500px) {
   

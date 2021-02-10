@@ -1,5 +1,5 @@
 <template>
-  <div class="home-core">
+  <div class="home-core" id='landing-id'>
     <div class='landing-core'>
       <div class='back-overlay'>
 
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class='services'>
+    <div class='services' id='services-id'>
       <h1 class='mb-3' style='font-weight:bold;'>Our Services</h1>
       <p class='services-text mb-5' data-aos='fade-up' data-aos-duration='500'>
         Since technology is rapidly evolving, businesses must keep pace in investing in newer
@@ -59,8 +59,7 @@
         <div 
           class='itechs-text'
           :data-aos="itech.animation"
-          :data-aos-delay="i * 150"
-          data-aos-duration="500"
+          data-aos-duration="700"
          >
           <h3 class='mb-5' style=''><span>{{itech.title}}</span></h3>
           <p>{{itech.content}}</p>
@@ -68,25 +67,30 @@
         <div 
           class='itechs-icon pa-5'
           :style="{backgroundImage: `url(${itech.icon})`}"
-          data-aos="fade-up"
-          :data-aos-delay="i * 150"
-          data-aos-duration="500"
+          data-aos="zoom-in"
+          data-aos-duration="700"
         ></div>
       </div>
     </div>
     <!-- contact -->
-    <div class='contact'>
+    <div class='contact' id='contact-id'>
       <div class='contct-info'>
         <h1 class='mb-4'>Get in Touch</h1>
         <div class='infos mb-4'>
-          <p><v-icon medium color='white'>fas fa-</v-icon> Email</p>
-          <p><v-icon medium color='white'>fas fa-</v-icon> Tel. Number</p>
-          <p><v-icon medium color='white'>fas fa-</v-icon> Address</p>
+          <p><v-icon color='white'>fas fa-envelope</v-icon> inno8tech@gmail.com</p>
+          <p><v-icon color='white'>fas fa-phone-alt</v-icon> 0612364758</p>
+          <p><v-icon color='white'>fas fa-map-marker</v-icon> cameroon</p>
         </div>
         <div class='social-media'></div>
       </div>
       <!-- contct form -->
-      <v-form class='contact-form' ref='contactForm'>
+      <v-form 
+        class='contact-form' 
+        ref='contactForm'
+        data-aos="fade-up"
+        data-aos-delay="150"
+        data-aos-duration="500"
+      >
         <p class='form-err-msg'></p>
         <v-text-field
             v-model="email"
@@ -111,7 +115,7 @@
           outlined
         ></v-textarea>
         <div class='btn-container'>
-          <v-btn large class='pa-3' color='#111111'>Send</v-btn>
+          <v-btn large class='pa-3' color='#111111'>Send Message</v-btn>
         </div>
       </v-form>
     </div>
@@ -139,22 +143,22 @@ export default {
       itechs: [
         {title: 'DIGITAL INNOVATION FOR BUSINESS GROWTH(DIBG)', 
           content: 'Digital innovation combined with sleek customer experience is the engine for growth in many businesses and industries.  This has revolutionized the way financial institutions, insurance and, many other businesses communicate with their customers and this has brought about the much-needed proximity to their customers. Digitization and innovation have brought forth many benefits to businesses. Some of such benefits are customer experience, business simplification, competitiveness, speed of operations, efficiency, and growth. However,  the effort can be daunting, especially if preparations are less than perfect. This is why it is important to partner with us.! Techers are known for their rapid ideation, design, prototyping, and deployment. We work on a project basis, and we can also provide your company with a dedicated team that will be with you throughout your digitization process.',
-          icon: require('../assets/home/businessgrowth.svg'), animation:'fade-right'},
+          icon: require('../assets/home/businessgrowth.jpg'), animation:'fade-right'},
         {title: 'DIGITAL INNOVATION FOR START-UPS(continuation for DIBG)', 
           content: 'We love startups because we are a startup too.!TECH Startup services aim at helping early-stage (other startups)companies accomplish their goals through product ideation, prototyping, software development, software testing, and maintenance.!TECH is happy to be associated with the growth story of some startups across industries such as shipping, inter-urban transportation, financial technology, and big data. With our expertise in agile development combined with the latest in data analysis and visualization,!TECH ensures that your brilliant idea is converted into a market redefining product with the potential of gaining market share over other average software solutions. ', 
           icon: require('../assets/home/startup.svg'), animation:'fade-left'},
         {title: 'DATA ANALYTICS and BUSINESS INTELLIGENCE', 
           content: 'Business intelligence (BI) leverages software and services to transform data into actionable insights. This process helps organizations to answer important questions regarding the business. A data-driven organization makes informed strategic and tactical business decisions that propel the organization for growth. To leverage intelligence from data, the organization needs to have or hire experts with sound business acumen, strong technology, and statistical knowledge to mine this data for patterns and insights. At !Tech, we have a strong and dedicated team of specialists with strong business acumen, superior delivery practices, and technical expertise that will build flexible, animated, and immersive visual analytics which allows organizational leaders to think creatively and make informed decisions thereby bringing returns on investment.', 
-          icon: require('../assets/home/statistics.svg'), animation:'fade-right'},
+          icon: require('../assets/home/statistics.jpg'), animation:'fade-right'},
         {title: 'QUANTITATIVE MARKETING AND ANALYTICS', 
           content: "As margins shrinks, the market becomes harder and the way forward is going digital to expand the market. It is all about drawing consumers to your business and maintaining their loyalty. But how do you constantly understand customer preferences and changing behavior? Is your marketing team meeting up? Are they bringing a return on marketing investment?!Tech is occupying this space with experience in industries ranging from satellite telecom, mobile networks operators(MNO’s) media agencies, mobile banking, and finance, insurance, etc.! Tech is leveraging Artificial intelligence, Analytics, Big Data, in marketing to understand customer preferences to prevent customer churn. This knowledge helps you answer questions in marketing ranging from customer patterns, behaviors, and where the market is shifting too. With this knowledge, organizations can plan and execute intelligent marketing that delivers value to customers and bring returns to the company.", 
-          icon: require('../assets/home/analytics.svg'), animation:'fade-left'},
+          icon: require('../assets/home/analytics.jpg'), animation:'fade-left'},
         {title: 'MARKETING AUTOMATION B2B', 
           content: 'To attract, nurture and qualify leads, every organization needs a good marketing team with expert knowledge in marketing automation. It is said that the efficient use of marketing automation drives a 14.5% increase in sales productivity and a 12.2% reduction in marketing overhead. Is your marketing team seeing these results? !Tech has positioned itself in helping organizations to prepare their marketing automation process.!Tech also leverages its expert knowledge in 360° degree marketing in promoting the companies across all media. !Tech carefully tailored messaging which leads to customer satisfaction that brings about brand loyalty. We make use of data to help companies understand what their marketing messages need to be. We analyzed social media conversations, web trends, inbound traffic, etc to uncover revenue opportunities. We answer questions such as ;What do people say about your brand? What other things are they interested in? What are they doing when they get to your site? Contact US', 
-          icon: require('../assets/home/automation.svg'), animation:'fade-right'},
+          icon: require('../assets/home/automation.jpg'), animation:'fade-right'},
           {title: 'DIGITAL MARKETING.(SUB PAGE WITHING MARKETING )OR you know how to put it)', 
           content: 'Marketing as a field has undergone a revolution. With the advancement in technology, traditional marketing is transitioning to the online space. Marketing in the digital space needs specialized skills set.!TECH prides itself with the knowledge of digital marketing across search engines, emails, social media, text etc. If your marketing can not show a return on investment then get in touch with us today.', 
-          icon: require('../assets/home/digitalmarketing.svg'), animation:'fade-left'},
+          icon: require('../assets/home/digitalmarketing.jpg'), animation:'fade-left'},
       ],
       neme: null,
       email: null,
@@ -189,32 +193,36 @@ export default {
   }
   .back-overlay{
     width: 100%;
-    height: 100%;
+    height: 95vh;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     position: absolute;
+    background-image: url('../assets/home/landingback.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
   .text-container{
-    width: 45%;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     position: absolute;
-    margin-left: 10%;
   }
   .text-container h1{
-    text-align: left;
+    text-align: center;
     font-weight: bold;
+    /* color: #c10fa3; */
     color: #eca715;
     font-size: 70px;
     line-height: 70px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
   }
   .text-container h1 .for{
@@ -225,9 +233,9 @@ export default {
   }
   .text-container p{
     font-size: 17px;
-    text-align: left;
+    text-align: center;
     color: #fff;
-    width: 60%;
+    width: 50%;
     height: auto;
   }
   .services{
@@ -256,11 +264,14 @@ export default {
   }
   .services-img{
     width: 50%;
-    height: 400px;
+    height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid red;
+    background-image: url('../assets/home/services.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
   .services-items{
     width: 50%;
@@ -283,7 +294,7 @@ export default {
   .service-title{
     text-align: left;
     width: 70%;
-    font-size: 45px;
+    font-size: 40px;
   }
   .services .services-flex{
     height: auto;
@@ -298,7 +309,7 @@ export default {
     width: 70px;
     height: 70px;
     /* border: 1px solid #eca715; */
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
   }
@@ -317,7 +328,7 @@ export default {
     align-items: center;
     padding-bottom: 50px;
     /* background-color: #f5f5f5; */
-    background-color: #ebf0f7;
+    /* background-color: #ebf0f7; */
   }
   .itechs{
     padding-top: 70px;
@@ -365,8 +376,8 @@ export default {
     align-items: flex-start;
   }
   .itechs-icon{
-    width: 200px;
-    height: 200px;
+    width: 400px;
+    height: 400px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -403,18 +414,21 @@ export default {
   }
   .infos{
     width: 100%;
-    height: 60%;
+    height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    border: 1px solid red;
   }
   .infos p{
     text-align: left;
     color: white;
     width: 100%;
     height: auto;
+    font-size: 15px;
+  }
+  .infos p .v-icon{
+    margin-right: 15px;
     font-size: 15px;
   }
   .contact-form{
@@ -448,7 +462,7 @@ export default {
   .btn-container .v-btn{
     color: #fff;
     font-size: 15px;
-    font-weight: bolder;
+    font-weight: bold;
     text-transform: capitalize;
   }
 </style>
