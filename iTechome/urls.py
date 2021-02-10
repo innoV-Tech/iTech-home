@@ -31,9 +31,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     # path('api/signin/', dash_view.signin),
-    # url(r'^$', TemplateView.as_view(template_name='index.html')),
+    url(r'^$', TemplateView.as_view(template_name='index.html')),
     # frontend urls
-    # path('', views.login, name='Login'),
+    path('', views.home, name='Home'),
+    path('about/', views.about, name='About'),
 
 ] + static(
     settings.STATIC_URL, document_root=settings.STATIC_ROOT,

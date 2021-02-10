@@ -1,5 +1,9 @@
 from django.shortcuts import render
 
 
-# def login(request):
-#     return render(request, template_name='index.html')
+def home(request):
+    return render(request, template_name='index.html')
+
+
+def about(request):
+    return render(request, template_name='index.html')
