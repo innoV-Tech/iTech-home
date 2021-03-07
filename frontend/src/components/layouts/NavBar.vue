@@ -1,5 +1,5 @@
 <template>
-    <div class='nav-core' :style="{backgroundColor: navBarBackGroundColor}">
+    <div class='nav-core animated fadeIn' :style="{backgroundColor: $store.state.navBarBackGroundColor}">
        <v-layout class='nav-layout hidden-sm-and-down'>
             <v-flex xs12 sm12 md2 lg2 xl2 class='logo-flex'>
                  <router-link to="/" style="text-decoration: none;">
@@ -60,7 +60,7 @@ export default {
 
     data(){
         return{
-            navBarBackGroundColor: '#2d2d41',
+            // navBarBackGroundColor: '#2d2d41',
             scrollColor: '#ffffff',
             easing: "easeInOutCubic",
             easings: Object.keys(easings),
@@ -87,8 +87,9 @@ export default {
         }
     },
     created(){
+        
         this.diseableIndicator()
-         window.addEventListener('scroll', this.diseableIndicator)
+        window.addEventListener('scroll', this.diseableIndicator)
     },
 
     methods: {
@@ -96,6 +97,7 @@ export default {
             let scrollValue = document.documentElement.scrollTop;
             let scrollNavLayout = document.querySelector(".scroll-nav-layout");
             if (scrollValue >= 100) {
+                console.log(self.navBarBackGroundColor);
                 scrollNavLayout.style.display = "flex";
                 scrollNavLayout.style.transition = "opacity 0.5s linear 0.1s";
                 scrollNavLayout.style.opacity = scrollValue / 150;

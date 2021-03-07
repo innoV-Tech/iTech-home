@@ -14,6 +14,10 @@
           improvement in technology, modern enterprises have been 
           relying more on customs software systems. 
         </p>
+        <div class='contact-btns mt-5'>
+          <v-btn x-large rounded class='in-touch mr-3' color='#eca715' @click='scrollTo("#contact-id")'><span>Get in Touch</span></v-btn>
+          <v-btn x-large rounded class='project-btn ml-3' outlined color='#eca715'><span>Request project</span></v-btn>
+        </div>
       </div>
     </div>
 
@@ -102,7 +106,7 @@
         <v-text-field
             v-model="name"
             :rules="[$store.state.rules.required]"
-            label="Name"
+            label="Name*"
             required
             outlined
         ></v-text-field>
@@ -116,7 +120,7 @@
         <v-textarea
           v-model="message"
           :rules="[$store.state.rules.required]"
-          label="Message"
+          label="Message*"
           required
           outlined
         ></v-textarea>
@@ -129,13 +133,27 @@
 </template>
 
 <script>
-// @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
-
+import * as easings from "vuetify/es5/services/goto/easing-patterns";
 export default {
   name: "Home",
 
   components: {
+  },
+
+  computed: {
+    target() {
+        const value = this[this.type];
+        if (!isNaN(value)) return Number(value);
+        else return value;
+    },
+    options() {
+        return {
+            duration: this.duration,
+            offset: this.offset,
+            easing: this.easing
+        };
+    }
   },
 
   data(){
@@ -170,12 +188,35 @@ export default {
       email: null,
       message: null,
       telNumber: null,
+      // easings
+      easing: "easeInOutCubic",
+      easings: Object.keys(easings),
+      duration: 400,
+      offset: 25,
     }
   },
 
-  created(){},
+  created(){
+    this.$store.state.navBarBackGroundColor = null
+    let self = this
+     window.addEventListener('scroll', function(){
+       let scrollValue = document.documentElement.scrollTop;
+       if(scrollValue > 700){
+            self.$store.state.navBarBackGroundColor = '#2d2d41'
+        }else {
+            self.$store.state.navBarBackGroundColor = null
+        }
+     })
+  },
 
   methods: {
+    scrollTo(ancre) {
+      let self = this;
+      setTimeout(() => {
+          this.$vuetify.goTo(ancre, self.options);
+      }, 20);
+    },
+
     sendMail(){
       let self = this;
       let formErrMsg = document.querySelector('.form-err-msg')
@@ -218,11 +259,11 @@ export default {
     justify-content: center;
     align-items: center;
     /* background-color: #2d2d41; */
-    margin-top: 50px;
+    /* margin-top: 50px; */
   }
   .landing-core{
     width: 100%;
-    height: 95vh;
+    height: 100vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -230,7 +271,7 @@ export default {
   }
   .back-overlay{
     width: 100%;
-    height: 95vh;
+    height: 100vh;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -274,6 +315,32 @@ export default {
     color: #fff;
     width: 50%;
     height: auto;
+  }
+  .contact-btns{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .contact-btns .v-btn{
+    padding: 50px;
+    font-weight: bold;
+    font-size: 17px;
+    text-transform: capitalize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .in-touch{
+  }
+  .in-touch span{
+    color: #fff;
+    margin: auto;
+  }
+  .project-btn span{
+    color: #eca715;
   }
   .services{
     width: 100%;

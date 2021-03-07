@@ -40,7 +40,11 @@ export default {
     }
   },
 
-  created(){},
+  created(){
+    setTimeout(() => {
+      this.$store.state.navBarBackGroundColor = '#2d2d41' // menu bar background color
+    }, 10)
+  },
 
   methods: {},
 }
