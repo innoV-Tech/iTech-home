@@ -16,7 +16,9 @@
         </p>
         <div class='contact-btns mt-5'>
           <v-btn x-large rounded class='in-touch mr-3' color='#eca715' @click='scrollTo("#contact-id")'><span>Get in Touch</span></v-btn>
-          <v-btn x-large rounded class='project-btn ml-3' outlined color='#eca715'><span>Request project</span></v-btn>
+          <router-link to="/request_project" style="text-decoration: none;">
+            <v-btn x-large rounded class='project-btn ml-3' outlined color='#eca715'><span>Request project</span></v-btn>
+          </router-link>
         </div>
       </div>
     </div>

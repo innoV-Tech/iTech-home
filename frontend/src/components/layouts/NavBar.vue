@@ -44,6 +44,9 @@
                         <!-- <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon> -->
                     </div>
                 </div>
+                <router-link to="/request_project" style="text-decoration: none;">
+                    <v-btn large rounded class='ml-3' style='text-transform: capitalize' color='#eca715'><span style='color:white;'>Request project</span></v-btn>
+                </router-link>
             </v-flex>
 
             <!-- <v-flex xs12 sm12 md2 lg2 xl2 class='actions-item'>
