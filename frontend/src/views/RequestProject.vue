@@ -2,7 +2,7 @@
     <div class='rproject-core'>
         <v-layout class='rproject-layout'>
             <v-flex xs11 sm11 md8 lg8 xl8 class='rproject-content'>
-                <v-form class='rproject-form' ref='rProjectForm'>
+                <v-form class='rproject-form animated fadeInUp' ref='rProjectForm'>
                     <div class='services'>
                         <v-radio-group v-model="serviceModel" class='service-radio' row>
                                 <div class='service ml-3 mr-3' v-for='(service, i) in services' :key='i' :class='serviceModel'>
@@ -34,7 +34,7 @@
                             color="#eca715"
                         ></v-checkbox>
                         <v-btn x-large color='#eca715' class='mt-5'>
-                            <span style='color:white;text-transform:capitalize;font-size:17px;font-weight:bold;'>Request</span>
+                            <span style='color:white;text-transform:capitalize;font-size:17px;font-weight:bold;'>Request Project</span>
                         </v-btn>
                     </div>
                 </v-form>
@@ -45,6 +45,7 @@
             v-model="termsDialog"
             scrollable
             max-width="1000px"
+            transition="dialog-bottom-transition"
         >
             <div class='terms-container'>
                 <p class='mb-2'>© TERMS AND CONDITIONS </p>
@@ -101,6 +102,8 @@ export default {
         justify-content: center;
         align-items: center;
         margin-top: 50px;
+        padding-bottom: 50px;
+        padding-top: 50px;
     }
     .rproject-layout{
         width: 100%;
@@ -162,7 +165,7 @@ export default {
     }
     .terms-container{
         width: 100%;
-        height: auto;
+        height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -173,7 +176,7 @@ export default {
     .terms-container p{
         padding: 0px;
         margin: 0px;
-        width: 90%;
+        width: 100%;
         text-align: left;
     }
 </style>

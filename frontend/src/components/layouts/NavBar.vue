@@ -44,15 +44,59 @@
                         <!-- <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon> -->
                     </div>
                 </div>
-                <router-link to="/request_project" style="text-decoration: none;">
+                <!-- <router-link to="/request_project" style="text-decoration: none;">
                     <v-btn large rounded class='ml-3' style='text-transform: capitalize' color='#eca715'><span style='color:white;'>Request project</span></v-btn>
-                </router-link>
+                </router-link> -->
             </v-flex>
 
             <!-- <v-flex xs12 sm12 md2 lg2 xl2 class='actions-item'>
                 <v-btn medium rounded color='#c10fa3' class='pt-3 pb-3'>Request project</v-btn>
             </v-flex> -->
-       </v-layout>
+        </v-layout>
+        <div class='mobile-bar hidden-md-and-up'>
+            <v-icon large color='white' class='ml-5' @click='sidebarDrawer=true'>fas fa-bars</v-icon>
+        </div>
+        <v-navigation-drawer 
+            v-model="sidebarDrawer" 
+            color='#15141c' 
+            fixed 
+            top 
+            width="65%" 
+            
+            temporary 
+            hide-overlay
+            class="nav-drawer hidden-md-and-up pt-5"
+        >
+            <v-flex xs12 sm12 md2 lg2 xl2 class='logo-flex'>
+                 <router-link to="/" style="text-decoration: none;">
+                     <div class='logo' @click="isServices=false, isContact=false,scrollTo('#landing-id'), sidebarDrawer=false"><h1 style='color:#eca715'>!Tech</h1></div>
+                </router-link>
+            </v-flex>
+
+            <v-flex xs12 sm12 md8 lg8 xl8 class='menu-items-container'>
+                <router-link to="/about" style="text-decoration: none;">
+                    <div class="menu-item">
+                        <span>About</span>
+                        <span class='indicator animated fadeInUp' v-if='$route.name == "About"'></span>
+                        <!-- <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon> -->
+                    </div>
+                </router-link>
+                <div @click="$router.push('/'), isContact=false, isServices=true, scrollTo('#services-id'), sidebarDrawer=false" style="text-decoration: none;cursor:pointer;">
+                    <div class="menu-item">
+                        <span>Services</span>
+                        <span class='indicator animated fadeInUp' v-if='$route.name=="Home" && isServices==true'></span>
+                        <!-- <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon> -->
+                    </div>
+                </div>
+                <div @click="$router.push('/'), isServices=false, isContact=true, scrollTo('#contact-id'), sidebarDrawer=false" style="text-decoration: none;cursor:pointer;">
+                    <div class="menu-item">
+                        <span>Contact</span>
+                        <span class='indicator animated fadeInUp' v-if='$route.name=="Home" && isContact==true'></span>
+                        <!-- <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon> -->
+                    </div>
+                </div>
+            </v-flex>
+       </v-navigation-drawer>
     </div>
 </template>
 
@@ -72,6 +116,7 @@ export default {
             // # pages indicators
             isServices: false,
             isContact: false,
+            sidebarDrawer: false,
         }
     },
     
@@ -220,7 +265,42 @@ export default {
     border: 2px solid #eca715;
     width: 30px;
 }
+.mobile-bar{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #2d2d41;
+}
+.nav-drawer {
+    /* width: 100%; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 5px;
+    /* top: 0px; */
+   /*z-index: 3; */
+    }
+    /* .v-navigation-drawer .v-navigation-drawer__content {
+        width: 90%;
+    } */
 @media only screen and (max-width: 500px) {
-  
+  .menu-items-container{
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .menu-items-container .menu-item{
+      margin-top: 20px;
+  }
+  .menu-items-container .menu-item span{
+      font-size: 17px;
+
+  }
 }
 </style>

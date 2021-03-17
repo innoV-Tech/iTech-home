@@ -106,4 +106,27 @@ export default {
     font-size: 17px;
     width: 70%;
   }
+  @media only screen and (max-width: 500px){
+    .about-core{
+      overflow-x: hidden;
+       height: auto;
+    }
+    .about-top{
+      flex-direction: column;
+    }
+    .top-container{
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin-left: 0px;
+    }
+    .top-container p, .about-img-container p{
+      width: 90%;
+    }
+    .about-img-container{
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 </style>
