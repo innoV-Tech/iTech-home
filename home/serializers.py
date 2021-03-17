@@ -1,8 +1,8 @@
 from rest_framework import serializers
-# from .models import Customers, Payment, Orders
+from .models import Contact
 
 
-# class OrderSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Orders
-#         fields = "__all__"
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = "__all__"

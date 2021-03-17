@@ -6,7 +6,7 @@
       </div>
 
       <div class='text-container'>
-        <h1 class=''><span>Intelligent systems</span> <span class='for'>4</span> <span>intelligent results</span></h1>
+        <h1 class='goal'><span>Intelligent systems</span> <span class='for'>4</span> <span>intelligent results</span></h1>
         <p class='mt-5'>
           Software systems facilitate business processes and enable 
           enterprises to operate efficiently while managing growth 
@@ -14,6 +14,12 @@
           improvement in technology, modern enterprises have been 
           relying more on customs software systems. 
         </p>
+        <div class='contact-btns mt-5 hidden-sm-and-down'>
+          <v-btn x-large rounded class='in-touch mr-3' color='#eca715' @click='scrollTo("#contact-id")'><span>Get in Touch</span></v-btn>
+          <!-- <router-link to="/request_project" style="text-decoration: none;">
+            <v-btn x-large rounded class='project-btn ml-3' outlined color='#eca715'><span>Request project</span></v-btn>
+          </router-link> -->
+        </div>
       </div>
     </div>
 
@@ -29,12 +35,12 @@
         has increased exponentially.
       </p>
      <div class='services-container mt-5'>
-       <div class='services-img'></div>
+       <div class='services-img hidden-sm-and-down'></div>
         <div class='services-items'>
           <h2 class='service-title ml-5 mb-5 font-weight-bold'>We develop <span style='color:#eca715'>intelligent</span> systems for <span style='color:#eca715'>intelligent</span> results</h2>
           <div class='services-flex-container'>
             <v-flex 
-              xs12 sm12 md4 lg4 xl4 
+              xs4 sm4 md4 lg4 xl4 
               v-for='(service,i) in services' 
               :key="i" 
               class='services-flex ml-5 mr-5 mt-5 mb-5'
@@ -65,7 +71,7 @@
           <p v-html='itech.content'></p>
         </div>
         <div 
-          class='itechs-icon pa-5'
+          class='itechs-icon pa-5 hidden-sm-and-down'
           :style="{backgroundImage: `url(${itech.icon})`}"
           data-aos="zoom-in"
           data-aos-duration="700"
@@ -93,16 +99,16 @@
       >
         <p class='form-err-msg'></p>
         <v-text-field
-            v-model="email"
-            label="Email"
-            type='email'
+            v-model="name"
+            :rules="[$store.state.rules.required]"
+            label="Name*"
             required
             outlined
         ></v-text-field>
         <v-text-field
-            v-model="name"
-            :rules="[$store.state.rules.required]"
-            label="Name"
+            v-model="email"
+            label="Email"
+            type='email'
             required
             outlined
         ></v-text-field>
@@ -116,7 +122,7 @@
         <v-textarea
           v-model="message"
           :rules="[$store.state.rules.required]"
-          label="Message"
+          label="Message*"
           required
           outlined
         ></v-textarea>
@@ -129,13 +135,27 @@
 </template>
 
 <script>
-// @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
-
+import * as easings from "vuetify/es5/services/goto/easing-patterns";
 export default {
   name: "Home",
 
   components: {
+  },
+
+  computed: {
+    target() {
+        const value = this[this.type];
+        if (!isNaN(value)) return Number(value);
+        else return value;
+    },
+    options() {
+        return {
+            duration: this.duration,
+            offset: this.offset,
+            easing: this.easing
+        };
+    }
   },
 
   data(){
@@ -170,37 +190,68 @@ export default {
       email: null,
       message: null,
       telNumber: null,
+      // easings
+      easing: "easeInOutCubic",
+      easings: Object.keys(easings),
+      duration: 400,
+      offset: 25,
     }
   },
 
-  created(){},
+  created(){
+    this.$store.state.navBarBackGroundColor = null
+    let self = this
+     window.addEventListener('scroll', function(){
+       let scrollValue = document.documentElement.scrollTop;
+       if(scrollValue > 700){
+            self.$store.state.navBarBackGroundColor = '#2d2d41'
+        }else {
+            self.$store.state.navBarBackGroundColor = null
+        }
+     })
+  },
 
   methods: {
+    scrollTo(ancre) {
+      let self = this;
+      setTimeout(() => {
+          this.$vuetify.goTo(ancre, self.options);
+      }, 20);
+    },
+
     sendMail(){
       let self = this;
       let formErrMsg = document.querySelector('.form-err-msg')
       let validationErrMsg = document.querySelector('.v-messages__message');
 
       if(!document.body.contains(validationErrMsg) && self.name != null && self.message != null){
-        // this.$store.dispatch("publicPostReq", {
-        //   url: "signin",
-        //   params: {
-        //       email: self.email,
-        //       password: self.password
-        //   },
-        //   auth: null,
-        //   csrftoken: null,
-        //   callback: function(data) {
-        //       console.log(data);
-        //       if(data.authenticate){
-        //         self.startSession(data.token, data.id)
-        //         self.$router.push({name: "Dashboard"})
-        //       }else{
-        //          formErrMsg.innerHTML = data.msg
-        //       }
-        //   },
-        // });
-        formErrMsg.innerHTML = 'Your message has been sent, Tank you!'
+        if(self.email != null || self.telNumber != null){
+          this.$store.dispatch("publicPostReq", {
+            url: "contact/send_message",
+            params: {
+                email: self.email,
+                name: self.name,
+                message: self.message,
+                tel_number: self.telNumber
+            },
+            auth: null,
+            csrftoken: null,
+            callback: function(data) {
+                console.log(data);
+                if(data.sended){
+                  formErrMsg.innerHTML = data.msg
+                  setTimeout(() => {
+                    formErrMsg.innerHTML = ''
+                    document.querySelector('.contact-form').reset()
+                  }, 2000)
+                }else{
+                  formErrMsg.innerHTML = data.msg
+                }
+            },
+          });
+        }else{
+          formErrMsg.innerHTML = 'Full your Email or Tel. number'
+        }
       }else{
         formErrMsg.innerHTML = 'Name and message should not be empty';
       }
@@ -218,11 +269,11 @@ export default {
     justify-content: center;
     align-items: center;
     /* background-color: #2d2d41; */
-    margin-top: 50px;
+    /* margin-top: 50px; */
   }
   .landing-core{
     width: 100%;
-    height: 95vh;
+    height: 100vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -230,7 +281,7 @@ export default {
   }
   .back-overlay{
     width: 100%;
-    height: 95vh;
+    height: 100vh;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -274,6 +325,32 @@ export default {
     color: #fff;
     width: 50%;
     height: auto;
+  }
+  .contact-btns{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .contact-btns .v-btn{
+    padding: 50px;
+    font-weight: bold;
+    font-size: 17px;
+    text-transform: capitalize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .in-touch{
+  }
+  .in-touch span{
+    color: #fff;
+    margin: auto;
+  }
+  .project-btn span{
+    color: #eca715;
   }
   .services{
     width: 100%;
@@ -501,5 +578,73 @@ export default {
     font-size: 15px;
     font-weight: bold;
     text-transform: capitalize;
+  }
+  @media only screen and (max-width: 500px){
+    .home-core{
+      overflow-x: hidden;
+      margin-top: 50px;
+    }
+    .text-container h1{
+      font-size: 35px;
+      line-height: 40px;
+    }
+    .text-container p{
+      width: 95%;
+    }
+    .services-text{
+      width: 95%;
+    }
+    .services-items{
+      width: 100%;
+    }
+    .service-title{
+      font-size: 30px;
+      text-align: center;
+      width: 90%;
+    }
+    .services-flex-container{
+      /* flex-wrap: nowrap; */
+    }
+    .services .services-flex{
+      justify-content: space-around;
+      align-items: center;
+      flex-direction: column;
+    }
+    .itechs:nth-child(odd), .itechs:nth-child(even){
+      padding-top: 10px;
+      flex-direction: column;
+    }
+    .itechs-text{
+      width: 90%;
+    }
+    .contact{
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .contct-info{
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+    .contct-info h1{
+      text-align: center;
+    }
+    .infos{
+      height: auto;
+      justify-content: flex-start;
+    }
+    .contact-form{
+      width: 95%;
+    }
+    .form-err-msg{
+      width: 90%;
+    }
+    .contact-form .v-text-field{
+      width: 90%;
+    }
+    /* .itechs-icon{
+      position: absolute;
+    } */
   }
 </style>

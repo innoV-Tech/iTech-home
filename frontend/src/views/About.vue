@@ -40,7 +40,11 @@ export default {
     }
   },
 
-  created(){},
+  created(){
+    setTimeout(() => {
+      this.$store.state.navBarBackGroundColor = '#2d2d41' // menu bar background color
+    }, 10)
+  },
 
   methods: {},
 }
@@ -101,5 +105,28 @@ export default {
     text-align: left;
     font-size: 17px;
     width: 70%;
+  }
+  @media only screen and (max-width: 500px){
+    .about-core{
+      overflow-x: hidden;
+       height: auto;
+    }
+    .about-top{
+      flex-direction: column;
+    }
+    .top-container{
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin-left: 0px;
+    }
+    .top-container p, .about-img-container p{
+      width: 90%;
+    }
+    .about-img-container{
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
   }
 </style>

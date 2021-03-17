@@ -21,18 +21,25 @@ from rest_framework.status import (
     HTTP_200_OK
 )
 
-# from orders.serializers import OrderSerializer, PaymentSerializer, CustomerSerializer
-# from .models import Customers, Orders, Payment
-
-# Create your views here.
+from home.serializers import ContactSerializer
+from .models import Contact
 
 
-# class OrderView(viewsets.ModelViewSet):
-#     queryset = Orders.objects.all()
-#     serializer_class = OrderSerializer
-#     permission_classes = [IsAuthenticated]
+class ContactView(viewsets.ModelViewSet):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    permission_classes = [AllowAny]
 
-#     @csrf_exempt
-#     @action(methods=['post'], detail=False)
-#     def new_order(self, request):
-#         pass
+    @csrf_exempt
+    @action(methods=['post'], detail=False)
+    def send_message(self, request):
+        req = request.data['body']
+
+        Contact.objects.create(
+            name=req['name'],
+            email=req['email'],
+            tel_number=req['tel_number'],
+            message=req['message'],
+        )
+
+        return Response({'sended': True, 'msg': 'Your message has been sent, Tank you!'})

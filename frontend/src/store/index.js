@@ -26,6 +26,7 @@ export default new Vuex.Store({
       v => !!v || "Email is required",
       v => /.+@.+/.test(v) || "Email is not valid"
     ],
+    navBarBackGroundColor: null,
   },
 
   getters: {

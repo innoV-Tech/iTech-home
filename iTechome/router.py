@@ -1,6 +1,6 @@
 from rest_framework import routers
-# from dashboard.views import DashboardView
+from home.views import ContactView
 
 
 router = routers.DefaultRouter()
-# router.register('dashboard', DashboardView)
+router.register('contact', ContactView)
